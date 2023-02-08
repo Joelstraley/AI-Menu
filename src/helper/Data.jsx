@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Menu from '../Menu'
 import { Configuration, OpenAIApi } from 'openai'
 
 export const entireMenu = {
@@ -42,30 +43,6 @@ export const entireMenu = {
 	],
 }
 
-async function fetchData({ prompt }) {
-	const configuration = new Configuration({
-		apiKey: import.meta.env.VITE_MY_API_KEY,
-	})
-	const openai = new OpenAIApi(configuration)
-
-	try {
-		const response = await openai.createImage({
-			prompt: prompt,
-			n: 1,
-			size: '256x256',
-		})
-		const categories = {
-			image_url: response['data'][0]['url'],
-			prompt: prompt,
-		}
-		console.log(response['data'][0]['url'])
-		return categories
-	} catch (e) {
-		console.log(e)
-	}
-}
-
-export default fetchData
 /* function Data() {
 	async function fetchData() {
 		try {
@@ -84,3 +61,52 @@ export default fetchData
 }
 
 export default Data */
+
+export function getItems(category) {
+	const configuration = new Configuration({
+		apiKey: import.meta.env.VITE_MY_API_KEY,
+	})
+	const openai = new OpenAIApi(configuration)
+
+	/* 	entireMenu[category].map(async (item, index) => {
+		try {
+			const response = await openai.createImage({
+				prompt: item,
+				n: 1,
+				size: '256x256',
+			})
+			const items = {
+				id: index,
+				image_url: response['data'][0]['url'],
+				prompt: item,
+			}
+			console.log(items)
+			return <Menu items={items} />
+		} catch (e) {
+			console.log(e)
+		}
+	}) */
+
+	/* const configuration = new Configuration({
+		apiKey: import.meta.env.VITE_MY_API_KEY,
+	})
+	const openai = new OpenAIApi(configuration)
+
+
+	try {
+		const response = await openai.createImage({
+			prompt: prompt,
+			n: 1,
+			size: '256x256',
+		})
+		const items = {
+			id: index,
+			image_url: response['data'][0]['url'],
+			prompt: prompt,
+		}
+		console.log(response['data'][0]['url'])
+		return <Menu items={items} />
+	} catch (e) {
+		console.log(e)
+	} */
+}

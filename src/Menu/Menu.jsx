@@ -5,7 +5,7 @@ export default function Menu({ items }) {
 	return (
 		<div className="section--center">
 			{items.map((menuItem) => {
-				const { id, title, img, desc, price } = menuItem
+				const { id, title, img } = menuItem
 				return (
 					<article
 						key={id}
@@ -18,9 +18,8 @@ export default function Menu({ items }) {
 						<div className="item--info">
 							<header>
 								<h4>{title}</h4>
-								<h4 className="price">{Math.floor(price * 10)}</h4>
 							</header>
-							<p className="item--text">{desc}</p>
+							{/* <p className="item--text">{desc}</p> */}
 						</div>
 					</article>
 				)

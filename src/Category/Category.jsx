@@ -1,8 +1,8 @@
-import React from 'react'
+import { useState } from 'react'
 import './Category.scss'
-import { fetchData, entireMenu } from '../helper/Data'
+import { getItems, entireMenu } from '../helper/Data'
 
-export default function Category({ categories }) {
+export default function Category() {
 	const [categories, setCategories] = useState(Object.keys(entireMenu))
 
 	return (
@@ -14,7 +14,7 @@ export default function Category({ categories }) {
 							type="button"
 							key={index}
 							/* onClick={() => filterItems(category)} */
-							onClick={() => fetchData(category)}
+							onClick={() => getItems(category)}
 							className="category--button__filter">
 							{category}
 						</button>
