@@ -1,34 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import './App.scss'
+import Category from './Category/'
+import Menu from './Menu'
+import data from './helper/Data'
+import { entireMenu } from './helper/Data'
+/* const allCategories = ['all', ...new Set(items.map((item) => item.category))] */
 
 function App() {
-  const [count, setCount] = useState(0)
+	console.log('catt', categories)
+	/* const [menuItems, setMenuItems] = useState({})
+		const [categories, setCategories] = useState(allCategories)
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+	useEffect(() => {
+		const renderCat = fetchData()
+		return () => {
+			setMenuItems(renderCat)
+		}
+	}, [])
+
+	const filterItems = (category) => {
+		if (category === 'all') {
+			setMenuItems(items)
+			return
+		}
+
+		const newItems = items.filter((item) => item.category === category)
+		setMenuItems(newItems)
+	} */
+
+	//
+	/* 
+  When Category is set 
+  forEach - call fetchData 
+  fetchData setsItems State 
+   */
+
+	return (
+		<main>
+			<section className="menu section">
+				<div className="title">
+					<h2>Mama's AI Diner</h2>
+					<div className="underline"></div>
+				</div>
+				<Category categories={categories} />
+				{/* <Menu items={menuItems} /> */}
+			</section>
+		</main>
+	)
 }
 
 export default App
