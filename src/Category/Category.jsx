@@ -2,9 +2,7 @@ import { useState } from 'react'
 import './Category.scss'
 import { getItems, entireMenu } from '../helper/Data'
 
-export default function Category() {
-	const [categories, setCategories] = useState(Object.keys(entireMenu))
-
+export default function Category(categories) {
 	return (
 		<div className="category--button__container">
 			{categories.map((category, index) => {

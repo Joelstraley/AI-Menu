@@ -62,11 +62,36 @@ export const entireMenu = {
 
 export default Data */
 
-export function getItems(category) {
+export async function getItems(category) {
+	const [loading, setLoading] = useState(true)
 	const configuration = new Configuration({
 		apiKey: import.meta.env.VITE_MY_API_KEY,
 	})
 	const openai = new OpenAIApi(configuration)
+
+	try {
+		setLoading(true)
+		const response = await openai.createImage({
+			prompt: 'breakfast',
+			n: 1,
+			size: '256x256',
+		})
+		const items = await {
+			id: 2,
+			image_url: response.data.data[0]['url'],
+			prompt: 'breakfast',
+		}
+		console.log('THIS-is-ITEMS', items)
+		setLoading(false)
+		return (
+			<Menu
+				items={items}
+				loading={loading}
+			/>
+		)
+	} catch (e) {
+		console.log(e)
+	}
 
 	/* 	entireMenu[category].map(async (item, index) => {
 		try {

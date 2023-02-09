@@ -5,7 +5,51 @@ import Menu from './Menu'
 
 /* const allCategories = ['all', ...new Set(items.map((item) => item.category))] */
 
+const entireMenu = {
+	Breakfast: [
+		'Two Eggs, Any Style',
+		'Eggs Benedict',
+		'Cereal - Raisin Bran, Corn Flakes, Special K, Wheaties',
+		"Chef's Omelette",
+		'French Toast',
+	],
+	Lunch: [
+		'Soup Du Jour',
+		'Taco Salad',
+		'Greek Salad',
+		'Buffalo Wings',
+		'Hamburger with fries',
+		'Homemade Chilli',
+	],
+	Dinner: [
+		'Broiled T-Bone Steak',
+		'Eggplant Parmesan',
+		'Two Broiled Lobster Tails',
+		'Stuffed Jumbo Shrimp',
+		'Fettuccine Alfredo',
+		'Lasagna',
+	],
+	Desert: [
+		'Ice Cream - Chocolate, Vanilla or Strawberry',
+		'Banana Royal',
+		'Strawberry Cheesecake',
+		'Jello',
+	],
+	Drinks: [
+		'Coffee',
+		'Tea',
+		'Milk',
+		'Chocolate Milk',
+		'Coca Cola',
+		'Sprite',
+		'Mountain Dew',
+	],
+}
+
 function App() {
+	const [categories, setCategories] = useState(Object.keys(entireMenu))
+	const [menuItems, setMenuItems] = useState(items)
+
 	/* const [menuItems, setMenuItems] = useState({})
 		const [categories, setCategories] = useState(allCategories)
 
@@ -40,8 +84,8 @@ function App() {
 					<h2>Mama's AI Diner</h2>
 					<div className="underline"></div>
 				</div>
-				<Category />
-				{/* <Menu items={menuItems} /> */}
+				<Category categories={categories} />
+				<Menu items={menuItems} />
 			</section>
 		</main>
 	)
