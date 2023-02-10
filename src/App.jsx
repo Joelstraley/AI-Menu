@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.scss'
+import { Configuration, OpenAIApi } from 'openai'
 import Category from './Category/'
 import Menu from './Menu'
-
 /* const allCategories = ['all', ...new Set(items.map((item) => item.category))] */
 
 const entireMenu = {
@@ -48,7 +48,10 @@ const entireMenu = {
 
 function App() {
 	const [categories, setCategories] = useState(Object.keys(entireMenu))
-	const [menuItems, setMenuItems] = useState(items)
+	const [menuItems, setMenuItems] = useState([])
+	const [loading, setLoading] = useState(true)
+
+	console.log('huh', Object.keys(entireMenu))
 
 	/* const [menuItems, setMenuItems] = useState({})
 		const [categories, setCategories] = useState(allCategories)
@@ -77,6 +80,32 @@ function App() {
   fetchData setsItems State 
    */
 
+	const getItems = async (category) => {
+		const configuration = new Configuration({
+			apiKey: import.meta.env.VITE_MY_API_KEY,
+		})
+		const openai = new OpenAIApi(configuration)
+
+		try {
+			setLoading(true)
+			const response = await openai.createImage({
+				prompt: 'breakfast',
+				n: 1,
+				size: '256x256',
+			})
+			const items = {
+				id: 2,
+				image_url: response.data.data[0]['url'],
+				prompt: 'breakfast',
+			}
+			console.log('THIS-is-ITEMS', items)
+			setLoading(false)
+			setMenuItems(items)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	return (
 		<main>
 			<section className="menu section">
@@ -84,8 +113,14 @@ function App() {
 					<h2>Mama's AI Diner</h2>
 					<div className="underline"></div>
 				</div>
-				<Category categories={categories} />
-				<Menu items={menuItems} />
+				<Category
+					categories={categories}
+					getItems={getItems}
+				/>
+				<Menu
+					items={menuItems}
+					loading={loading}
+				/>
 			</section>
 		</main>
 	)

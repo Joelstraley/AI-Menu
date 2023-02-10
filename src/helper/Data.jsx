@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Menu from '../Menu'
-import { Configuration, OpenAIApi } from 'openai'
+/* import { Configuration, OpenAIApi } from 'openai' */
 
 export const entireMenu = {
 	Breakfast: [
