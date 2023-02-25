@@ -37,12 +37,12 @@ const entireMenu = {
 	],
 	Drinks: [
 		'Coffee',
-		'Tea',
+		/* 		'Tea',
 		'Milk',
 		'Chocolate Milk',
 		'Coca Cola',
 		'Sprite',
-		'Mountain Dew',
+		'Mountain Dew', */
 	],
 }
 
@@ -51,7 +51,7 @@ function App() {
 	const [menuItems, setMenuItems] = useState([])
 	const [loading, setLoading] = useState(true)
 
-	console.log('huh', Object.keys(entireMenu))
+	console.log('huh', Object.keys(entireMenu), "what", categories)
 
 	/* const [menuItems, setMenuItems] = useState({})
 		const [categories, setCategories] = useState(allCategories)
@@ -80,47 +80,58 @@ function App() {
   fetchData setsItems State 
    */
 
+  let aiResults = []
+
 	const getItems = async (category) => {
 		const configuration = new Configuration({
 			apiKey: import.meta.env.VITE_MY_API_KEY,
 		})
 		const openai = new OpenAIApi(configuration)
 
-		try {
-			setLoading(true)
-			const response = await openai.createImage({
-				prompt: 'breakfast',
-				n: 1,
-				size: '256x256',
-			})
-			const items = {
-				id: 2,
-				image_url: response.data.data[0]['url'],
-				prompt: 'breakfast',
+		entireMenu[category].map(async (item, index) => {
+			console.log("item", item, "entire", entireMenu[category])
+			try {
+				setLoading(true)
+				const response = await openai.createImage({
+					prompt: item,
+					n: index,
+					size: '256x256',
+				})
+				const items = {
+					id: index,
+					image_url: response.data.data[0]['url'],
+					prompt: item,
+				}
+				console.log('THIS-is-ITEMS', items)
+				await aiResults.push(items)
+				//aiResults = [...items, items]
+				console.log("aiR", aiResults)
+				await setMenuItems(aiResults)
+				await setLoading(false)
+			} catch (e) {
+				console.log(e)
 			}
-			console.log('THIS-is-ITEMS', items)
-			setLoading(false)
-			setMenuItems(items)
-		} catch (e) {
-			console.log(e)
-		}
+		})
 	}
 
+
+console.log("Outside-menu-items", menuItems)
 	return (
 		<main>
 			<section className="menu section">
 				<div className="title">
-					<h2>Mama's AI Diner</h2>
+					<h2>Ye Olde AI Diner</h2>
 					<div className="underline"></div>
 				</div>
 				<Category
 					categories={categories}
 					getItems={getItems}
 				/>
-				<Menu
+				{loading && 
+				<>LOADING</>}
+				{!loading && <Menu
 					items={menuItems}
-					loading={loading}
-				/>
+				/>}
 			</section>
 		</main>
 	)
